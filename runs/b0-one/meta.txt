@@ -1,12 +1,12 @@
 名字: b0-one
-开始: 2026-11-06T14:16:58+08:00
+开始: 2026-11-06T14:25:21+08:00
 主机: Linux 6.8.0-136-generic x86_64
 CPU: 2 个逻辑核；General Purpose Processor
-内存: 3531 MiB，available 2533 MiB
+内存: 3531 MiB，available 2524 MiB
 systemd: systemd 255 (255.4-1ubuntu8.16)
 loadgen: 绑定的核 0；缺口阈值 0.2s
-仓库提交: 1d6a3aa，未提交的改动 1 处
-压测命令: bin/loadgen '-url' 'http://127.0.0.1:8080/api/courses/1' '-rates' '20,40,60,80,100' '-step' '20s'
+仓库提交: e6cfba4，未提交的改动 9 处
+压测命令: bin/loadgen '-url' 'http://127.0.0.1:8080/api/courses/1' '-rates' '20,40,60,80,100,120,140,160' '-step' '20s'
 lbd /config:
 {
   "addr": "127.0.0.1:8080",
@@ -38,7 +38,7 @@ lbd /backends:
     "ejected": false,
     "eligible": true,
     "inflight": 0,
-    "served": 0
+    "served": 12775
   }
 ]
 scaler /config:
@@ -80,4 +80,4 @@ scaler /instances:
     "restarts": 0
   }
 ]
-结束: 2026-11-06T14:18:40+08:00
+结束: 2026-11-06T14:28:03+08:00

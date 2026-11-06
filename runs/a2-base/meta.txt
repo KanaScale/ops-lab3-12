@@ -1,0 +1,35 @@
+名字: a2-base
+开始: 2026-11-06T10:33:52+08:00
+主机: Linux 6.8.0-136-generic x86_64
+CPU: 2 个逻辑核；General Purpose Processor
+内存: 3531 MiB，available 2540 MiB
+数据目录: data → /dev/vda1（ext4），统计的磁盘: vda
+enrolld: pid 2967518，绑定的核 0,1
+loadgen: 绑定的核 0
+接口: /api/courses/{id}；SLO 阈值 0.05s
+promsteps 变量: route=/api/courses/{id} slo=0.05 cpus=0|1 disk=vda
+仓库提交: cea2333，未提交的改动 1 处
+压测命令: bin/loadgen '-url' 'http://127.0.0.1:8081/api/courses/1' '-rates' '30,60' '-step' '20s'
+enrolld /config:
+{
+  "addr": "127.0.0.1:8081",
+  "version": "v1",
+  "work": 2000000,
+  "pool": 32,
+  "db_ms": 2,
+  "pool_timeout": "1s",
+  "sync": "each",
+  "sync_interval": "1s",
+  "data": "/root/ops-lab3-12/data/a",
+  "warmup": "0s",
+  "drain_delay": "2s",
+  "report_max": 0,
+  "leak_kb": 0,
+  "cgroup": "/sys/fs/cgroup/system.slice/lab3-a.service",
+  "go_version": "go1.26.9",
+  "gomaxprocs": 2,
+  "gogc": "",
+  "gomemlimit": "",
+  "pid": 2967518,
+  "started": "2026-11-06T10:33:02+08:00"
+}

@@ -1,0 +1,103 @@
+# HELP lb_requests_total lbd 转发完的请求数，按实例和状态码分；502 表示转发失败，503 表示没有可用的实例
+# TYPE lb_requests_total counter
+lb_requests_total{backend="127.0.0.1:8101",code="200"} 56273
+lb_requests_total{backend="127.0.0.1:8101",code="502"} 156
+lb_requests_total{backend="127.0.0.1:8102",code="200"} 30814
+lb_requests_total{backend="127.0.0.1:8103",code="200"} 30814
+lb_requests_total{backend="127.0.0.1:8104",code="200"} 30813
+lb_requests_total{backend="none",code="503"} 3145
+# HELP lb_request_duration_seconds lbd 看到的耗时：从收到请求到转发的响应写完
+# TYPE lb_request_duration_seconds histogram
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.001"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.002"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.005"} 18929
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.01"} 33717
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.02"} 43552
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.05"} 46687
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.1"} 48627
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.2"} 51023
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="0.5"} 53741
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="1"} 55302
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="2"} 56277
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="5"} 56429
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8101",le="+Inf"} 56429
+lb_request_duration_seconds_sum{backend="127.0.0.1:8101"} 4554.291211230009
+lb_request_duration_seconds_count{backend="127.0.0.1:8101"} 56429
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.001"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.002"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.005"} 8544
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.01"} 20126
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.02"} 29109
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.05"} 30812
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.1"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.2"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="0.5"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="1"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="2"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="5"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8102",le="+Inf"} 30814
+lb_request_duration_seconds_sum{backend="127.0.0.1:8102"} 290.5358111100002
+lb_request_duration_seconds_count{backend="127.0.0.1:8102"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.001"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.002"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.005"} 8456
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.01"} 20180
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.02"} 29087
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.05"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.1"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.2"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="0.5"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="1"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="2"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="5"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8103",le="+Inf"} 30814
+lb_request_duration_seconds_sum{backend="127.0.0.1:8103"} 290.1997102940002
+lb_request_duration_seconds_count{backend="127.0.0.1:8103"} 30814
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.001"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.002"} 0
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.005"} 8359
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.01"} 20095
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.02"} 29080
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.05"} 30810
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.1"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.2"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="0.5"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="1"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="2"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="5"} 30813
+lb_request_duration_seconds_bucket{backend="127.0.0.1:8104",le="+Inf"} 30813
+lb_request_duration_seconds_sum{backend="127.0.0.1:8104"} 291.5334215730014
+lb_request_duration_seconds_count{backend="127.0.0.1:8104"} 30813
+# HELP lb_inflight_requests 正在转发给该实例的请求数
+# TYPE lb_inflight_requests gauge
+lb_inflight_requests{backend="127.0.0.1:8101"} 0
+lb_inflight_requests{backend="127.0.0.1:8102"} 0
+lb_inflight_requests{backend="127.0.0.1:8103"} 0
+lb_inflight_requests{backend="127.0.0.1:8104"} 0
+# HELP lb_backend_up 健康检查的结论：1 健康，0 不健康
+# TYPE lb_backend_up gauge
+lb_backend_up{backend="127.0.0.1:8101"} 1
+lb_backend_up{backend="127.0.0.1:8102"} 1
+lb_backend_up{backend="127.0.0.1:8103"} 1
+lb_backend_up{backend="127.0.0.1:8104"} 1
+# HELP lb_backend_eligible 能否接新请求：健康、没有排空、没有被摘除时为 1
+# TYPE lb_backend_eligible gauge
+lb_backend_eligible{backend="127.0.0.1:8101"} 1
+lb_backend_eligible{backend="127.0.0.1:8102"} 1
+lb_backend_eligible{backend="127.0.0.1:8103"} 1
+lb_backend_eligible{backend="127.0.0.1:8104"} 1
+# HELP lb_no_backend_total 没有可用实例、直接返回 503 的请求数
+# TYPE lb_no_backend_total counter
+lb_no_backend_total 3145
+# HELP lb_events_total 状态变化的次数，按事件分
+# TYPE lb_events_total counter
+lb_events_total{event="added"} 5
+lb_events_total{event="down"} 12
+lb_events_total{event="removed"} 1
+lb_events_total{event="up"} 17
+# HELP lb_backends 当前登记的实例数（含不健康、排空中的）
+# TYPE lb_backends gauge
+lb_backends 4
+# HELP lb_backends_eligible 当前能接新请求的实例数
+# TYPE lb_backends_eligible gauge
+lb_backends_eligible 4

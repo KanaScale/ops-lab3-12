@@ -8,15 +8,15 @@
 
 | 项 | 内容 |
 |---|---|
-| 小组 | 第 <组号> 组 |
-| 仓库地址 | <https://github.com/…> |
-| 主机 | <云厂商与规格名，例如某云的 2 vCPU 4 GB 通用型> |
-| CPU | <`lscpu` 的 Model name；vCPU 数> |
-| 内存与 swap | <`free -m` 的 total；`swapon --show` 的输出，没有 swap 就写“无”> |
-| 操作系统、内核、systemd | <`/etc/os-release` 的 PRETTY_NAME；`uname -r`；`systemctl --version` 第一行> |
-| cgroup | <`stat -fc %T /sys/fs/cgroup` 的输出；`cat /sys/fs/cgroup/cgroup.controllers` 的输出> |
-| Go、Prometheus、node_exporter | <`go version`；`tools/prometheus --version` 第一行；`tools/node_exporter --version` 第一行> |
-| 分核 | 实例：<如 1>；loadgen、lbd、scaler、Prometheus、node_exporter：<如 0> |
+| 小组 | 第 12 组 |
+| 仓库地址 | https://github.com/KanaScale/ops-lab3-12 |
+| 主机 | 华为云 Flexus X，华东-上海一，通用计算型 x1.2u.4g（2 vCPU、4 GiB） |
+| CPU | General Purpose Processor；2 vCPU；`lscpu -e` 显示逻辑 CPU 0、1 均对应 CORE 0 |
+| 内存与 swap | 3531 MiB；swap 无（`free -m` 的 `Mem: total`、`Swap: total` 均据任务 0 输出；`swapon --show` 无输出） |
+| 操作系统、内核、systemd | Ubuntu 24.04.4 LTS；`6.8.0-136-generic`；`systemd 255 (255.4-1ubuntu8.16)` |
+| cgroup | `cgroup2fs`；控制器：`cpuset cpu io memory hugetlb pids rdma misc` |
+| Go、Prometheus、node_exporter | `go version go1.26.9 linux/amd64`；`prometheus, version 3.13.4`；`node_exporter, version 1.12.1` |
+| 分核 | 实例：逻辑 CPU 1；loadgen、Prometheus、node_exporter：逻辑 CPU 0；lbd、scaler：逻辑 CPU 0 |
 
 ## 2. 任务 A：配额，节流与 OOM
 

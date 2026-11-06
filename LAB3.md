@@ -117,7 +117,11 @@ oom-kill: constraint=CONSTRAINT_MEMCG, oom_memcg=/system.slice/lab3-a.service, t
 
 改法一测前计划：先在 `MemoryMax=512M`、`MemorySwapMax=0` 下只重测 10、20 请求/秒两个阶段，取得 20 请求/秒的 `report_inflight_max` 与内存峰值，再按 `基线 + 峰值在途数 × 8 MiB × 2` 加约 10% 余量，选择正式的 `MemoryMax`。预计较高限额可避免目标 20 请求/秒阶段被杀；若仅有平均并发估算而无峰值，配额可能仍偏小。改法二保持 200M，上限暂按 `(200 - 约 13 MiB 基线) ÷ (8 MiB × 2) ≈ 11` 估算，拟取 `-report-max 10`；预计不再 OOM，但高负载时超出的请求会立即返回 503。正式参数在校准数据到手后确定。
 
-两种改法：按最坏情况定的 limit 是 <填写>（算式：<填写>）；限制并发时 `-report-max` 取 <填写>（依据：<填写>）。
+校准实测：`runs/a3-calib20/steps.csv` 中的 10、20 请求/秒阶段共 578 个请求全部成功；`red.csv` 中 20 请求/秒阶段的 `inflight_avg=9.46667`、`report_inflight_max=19`、`rss_max_mb=298.246`、`heap_max_mb=217.505`、`mem_current_max_mb=293.477`，限额为 512 MiB。`report_inflight_max` 是 Prometheus 抓取时观测到的最大值，未必覆盖抓取间隔内更短的峰值。
+
+正式参数与复测前预测：改法一按 A2 的约 13 MiB RSS 基线和校准得到的峰值 19 估算，`(13 + 19 × 8 × 2) × 1.1 = 348.7 MiB`，向上取 `MemoryMax=360M`，并继续使用 `MemorySwapMax=0`。预计目标 20 请求/秒阶段不再 OOM，30 请求/秒阶段可能超出为 20 请求/秒配置的限额。改法二保持 `MemoryMax=200M`，取 `-report-max 10`：`13 + 10 × 8 × 2 = 173 MiB < 200 MiB`。预计全部阶段不会 OOM，但超过并发上限的请求会返回 503，且到达率越高，503 越多。
+
+两种改法：按目标 20 请求/秒的校准峰值定的 limit 是 `MemoryMax=360M`（算式：`(13 + 19 × 8 × 2) × 1.1 = 348.7 MiB`，向上取整）；限制并发时 `-report-max` 取 10（依据：`13 + 10 × 8 × 2 = 173 MiB < 200 MiB`）。复测结果待填。
 
 ## 3. 任务 B：伸缩控制环
 

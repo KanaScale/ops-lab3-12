@@ -87,13 +87,35 @@ throttle_ratio      sum(rate(cgroup_cpu_throttled_periods_total{job="enrolld"}[$
 
 预测（测量之前写）：每个 `/api/report?mb=8&ms=500` 请求分配 8 MiB，保持约 0.5 秒。按 Little's Law，到达率 10、20、30 请求/秒时，平均在途数分别约 5、10、15，正在处理的请求至少占约 40、80、120 MiB。Poisson 到达会造成短时堆积，20 秒阶段内的最多在途数粗估约为 10～12、17～21、23～28；精确峰值需实测。若仅算同时存活的报表内存，加上 A2 中约 12～13 MiB 的进程 RSS 基线，RSS 约为 53、93、133 MiB；但 Go 默认 `GOGC=100` 允许堆在下次回收前增长，粗略按报表内存的约 2 倍留余量，则可能接近 93、173、253 MiB。`MemoryMax=200M` 且 `MemorySwapMax=0` 时，预计 30 请求/秒阶段触发 cgroup OOM；20 请求/秒阶段若并发峰值或回收时机不利，也可能提前触发。以上 RSS 是量级估计，`memory.current` 还包含堆外和 cgroup 内其他内存。
 
-<粘贴三次实验的表格（`scripts/table.sh runs/<名字> ok_rps error_rate p99_ms inflight_avg report_inflight_max rss_max_mb heap_max_mb mem_current_max_mb mem_limit_mb`）>
+`runs/a3-oom/steps.csv`、`red.csv` 的逐阶段数据如下。阶段 2 的服务指标为空，是实例在阶段结束前被杀，Prometheus 无法查询存活的 `enrolld`；`loadgen` 因该阶段成功率低于 50% 而停止，未运行原计划的阶段 3。
+
+| 阶段 | 目标 rps | ok_rps | error_rate | p99_ms（成功请求） | inflight_avg | report_inflight_max | rss_max_mb | heap_max_mb | mem_current_max_mb | mem_limit_mb |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 10 | 9.1 | 0 | 505.56 | 4.33333 | 9 | 138.008 | 113.36 | 132.973 | 200 |
+| 2 | 20 | 1.8 | 0.9091 | 505.27 | — | — | — | — | — | — |
+
+阶段 1 的平均在途 4.33333 接近预测的 5，但实测峰值达到 9（`runs/a3-oom/red.csv`）；GC 前后堆和 RSS 比只按平均在途请求计算的值大。阶段 2 自 11:10:41 开始，实例于 11:10:44 被杀（`runs/a3-oom/steps.csv` 的 `start_local`、下方 `journalctl`），比预测的阶段 3 更早。该阶段 396 个请求仅 36 个成功、360 个网络错误（`runs/a3-oom/steps.csv`）。`runs/a3-oom/use.csv` 记录阶段 2 主机最少仍有 2510.4 MiB 可用内存，因此这不是整台主机耗尽内存。阶段 2 的实际并发峰值因进程死亡而缺失，不能从阶段平均值反推；请求突发和 GC 回收时机是提前触及 cgroup 上限的可能原因，需要后续复测确认。
 
 被杀的证据（`systemctl show -p ActiveState,Result,ExecMainStatus lab3-a` 和 `journalctl -u lab3-a` 的相关行，`dmesg` 或 `/var/log/kern.log` 中的 oom-kill 行）：
 
 ```text
-<粘贴>
+systemctl show -p ActiveState,Result,ExecMainStatus lab3-a:
+Result=oom-kill
+ExecMainStatus=9
+ActiveState=failed
+
+journalctl -u lab3-a（关键字段）：
+A process of this unit has been killed by the OOM killer.
+Main process exited, code=killed, status=9/KILL
+Failed with result 'oom-kill'.
+
+dmesg（关键字段）：
+oom-kill: constraint=CONSTRAINT_MEMCG, oom_memcg=/system.slice/lab3-a.service, task=enrolld
 ```
+
+以上是实验后 `systemctl`、`journalctl`、`dmesg` 的关键字段记录，已略去主机标识、进程号及其他不影响判断的日志字段。`CONSTRAINT_MEMCG` 指向 `lab3-a.service` 的 cgroup，支持“服务内存上限触发 OOM”的判断。
+
+改法一测前计划：先在 `MemoryMax=512M`、`MemorySwapMax=0` 下只重测 10、20 请求/秒两个阶段，取得 20 请求/秒的 `report_inflight_max` 与内存峰值，再按 `基线 + 峰值在途数 × 8 MiB × 2` 加约 10% 余量，选择正式的 `MemoryMax`。预计较高限额可避免目标 20 请求/秒阶段被杀；若仅有平均并发估算而无峰值，配额可能仍偏小。改法二保持 200M，上限暂按 `(200 - 约 13 MiB 基线) ÷ (8 MiB × 2) ≈ 11` 估算，拟取 `-report-max 10`；预计不再 OOM，但高负载时超出的请求会立即返回 503。正式参数在校准数据到手后确定。
 
 两种改法：按最坏情况定的 limit 是 <填写>（算式：<填写>）；限制并发时 `-report-max` 取 <填写>（依据：<填写>）。
 

@@ -56,9 +56,9 @@ GOMAXPROCS=2，忙线程 2 个，计数 10.0 秒
 throttle_ratio      sum(rate(cgroup_cpu_throttled_periods_total{job="enrolld"}[${window}])) / sum(rate(cgroup_cpu_periods_total{job="enrolld"}[${window}]))
 ```
 
-配额 100% 时测得的每请求 CPU：<填写> ms（`runs/<名字>/red.csv` 的 `cpu_ms_per_req`）；据此选定的到达率：<填写> 请求/秒，平均约 <填写> 核。
+配额 100% 时测得的每请求 CPU：4.27558 ms（`runs/a2-base/red.csv` 第 2 阶段的 `cpu_ms_per_req`；第 1 阶段为 4.3691 ms）。据此选定到达率为 90 请求/秒：`90 × 4.27558 / 1000 ≈ 0.385` 核，接近目标 0.4 核。基线的 30、60 请求/秒阶段均无错误，客户端 p99 分别为 8.20、10.75 ms，`throttle_ratio` 均为 0（`runs/a2-base/steps.csv`、`red.csv`）；`loadgen.log` 未报告发送滞后，压测机 CPU 约 1%。为使后续对照采用同一到达率，变更配额前还需在 100% 配额下补测 90 请求/秒。
 
-预测（配额改为 50% 之前写）：平均用量低于配额，p99 会不会变？节流比例大约多少？<填写>
+预测（配额改为 50% 之前写）：90 请求/秒时，按基线的每请求 CPU 估算平均用量约 0.385 核，低于 0.5 核配额，但到达过程是 Poisson，短时请求可能集中。每 100 ms 平均约 9 个请求、消耗约 38.5 ms CPU；若某些周期超过 50 ms CPU 预算，实例会在周期结束前被节流。因此预计平均吞吐仍接近 90 请求/秒，但 50% 配额下的 p99 高于同到达率的 100% 配额对照，`throttle_ratio` 从 0 变成非零，粗估约 10%～30%。具体比例和 p99 取决于请求到达的随机波动、调度及共享核干扰。
 
 各次实验的数据（`scripts/table.sh runs/<名字> ok_rps p50_ms p99_ms server_p99_ms gomaxprocs cg_limit_cores cg_cpu_cores throttle_ratio throttled_s_per_s`，每次一张表）：
 

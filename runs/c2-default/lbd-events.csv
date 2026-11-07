@@ -1,0 +1,13 @@
+unix_ms,time,backend,event,detail
+1794022379974,11:32:59.974,127.0.0.1:8101,added,init=down
+1794022379982,11:32:59.982,127.0.0.1:8103,added,init=down
+1794022379985,11:32:59.985,127.0.0.1:8102,added,init=down
+1794022381976,11:33:01.976,127.0.0.1:8101,up,连续成功 2 次
+1794022381983,11:33:01.983,127.0.0.1:8103,up,连续成功 2 次
+1794022381986,11:33:01.986,127.0.0.1:8102,up,连续成功 2 次
+1794022455476,11:34:15.476,127.0.0.1:8101,down,"连续失败 3 次：Get ""http://127.0.0.1:8101/readyz"": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
+1794022455482,11:34:15.482,127.0.0.1:8103,down,"连续失败 3 次：Get ""http://127.0.0.1:8103/readyz"": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
+1794022455486,11:34:15.486,127.0.0.1:8102,down,"连续失败 3 次：Get ""http://127.0.0.1:8102/readyz"": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
+1794022456977,11:34:16.977,127.0.0.1:8101,up,连续成功 2 次
+1794022456982,11:34:16.982,127.0.0.1:8103,up,连续成功 2 次
+1794022456988,11:34:16.988,127.0.0.1:8102,up,连续成功 2 次

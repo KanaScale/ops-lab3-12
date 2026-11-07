@@ -1,0 +1,115 @@
+名字: c3-slow
+开始: 2026-11-07T11:44:38+08:00
+主机: Linux 6.8.0-136-generic x86_64
+CPU: 2 个逻辑核；General Purpose Processor
+内存: 3531 MiB，available 1641 MiB
+systemd: systemd 255 (255.4-1ubuntu8.16)
+loadgen: 绑定的核 0；缺口阈值 0.2s
+仓库提交: 6b28978，未提交的改动 4 处
+压测命令: bin/loadgen '-url' 'http://127.0.0.1:8080/api/courses/1' '-plan' '168@240s'
+lbd /config:
+{
+  "addr": "127.0.0.1:8080",
+  "admin": "127.0.0.1:8090",
+  "policy": "rr",
+  "check_path": "/readyz",
+  "check_interval": "1s",
+  "check_timeout": "500ms",
+  "fall": 3,
+  "rise": 2,
+  "timeout": "2s",
+  "outlier": false,
+  "outlier_window": "10s",
+  "outlier_factor": 3,
+  "outlier_min_ms": 50,
+  "outlier_min_requests": 50,
+  "outlier_error_rate": 0.2,
+  "outlier_max_frac": 0.34,
+  "outlier_eject": "30s",
+  "events": "data/lbd-events.csv",
+  "started": "2026-11-07T11:44:11+08:00"
+}
+lbd /backends:
+[
+  {
+    "addr": "127.0.0.1:8101",
+    "up": true,
+    "draining": false,
+    "ejected": false,
+    "eligible": true,
+    "inflight": 0,
+    "served": 0
+  },
+  {
+    "addr": "127.0.0.1:8103",
+    "up": true,
+    "draining": false,
+    "ejected": false,
+    "eligible": true,
+    "inflight": 0,
+    "served": 0
+  },
+  {
+    "addr": "127.0.0.1:8102",
+    "up": true,
+    "draining": false,
+    "ejected": false,
+    "eligible": true,
+    "inflight": 0,
+    "served": 0
+  }
+]
+scaler /config:
+{
+  "mode": "fixed",
+  "replicas": 3,
+  "min": 2,
+  "max": 4,
+  "target": 0.7,
+  "tolerance": 0.1,
+  "signal": "",
+  "sync": "15s",
+  "down_window": "5m0s",
+  "schedule": "",
+  "pull": "20s",
+  "quota_percent": 25,
+  "quota_period": "",
+  "memory": "128M",
+  "cpus": "1",
+  "restart": "",
+  "bin": "/root/ops-lab3-12/bin/enrolld",
+  "args": "-warmup 60s -work 1000000",
+  "env": "",
+  "version": "v1",
+  "base_port": 8101,
+  "data": "/root/ops-lab3-12/data",
+  "lb": "http://127.0.0.1:8090",
+  "prom": "http://127.0.0.1:9090",
+  "admin": "127.0.0.1:8091",
+  "started": "2026-11-07T10:48:01+08:00"
+}
+scaler /instances:
+[
+  {
+    "addr": "127.0.0.1:8101",
+    "version": "v1",
+    "state": "ready",
+    "created": "10:48:01",
+    "restarts": 0
+  },
+  {
+    "addr": "127.0.0.1:8103",
+    "version": "v1",
+    "state": "ready",
+    "created": "10:48:01",
+    "restarts": 0
+  },
+  {
+    "addr": "127.0.0.1:8102",
+    "version": "v1",
+    "state": "ready",
+    "created": "11:15:13",
+    "restarts": 0
+  }
+]
+结束: 2026-11-07T11:48:40+08:00

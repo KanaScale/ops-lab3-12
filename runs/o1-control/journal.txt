@@ -1,0 +1,5 @@
+Nov 09 21:18:33 ecs-af06 systemd[1]: Started lab3-a.service - /root/ops-lab3-12/bin/enrolld -addr 127.0.0.1:8081 -data /root/ops-lab3-12/data/a.
+Nov 09 21:18:33 ecs-af06 enrolld[3971237]: 2026/11/09 21:18:33 enrolld v1 监听 127.0.0.1:8081；GOMAXPROCS=2；cgroup /sys/fs/cgroup/system.slice/lab3-a.service；预热 0s；读：work=200000、pool=32、db-ms=2；写：sync=each
+Nov 09 21:19:06 ecs-af06 systemd[1]: lab3-a.service: A process of this unit has been killed by the OOM killer.
+Nov 09 21:19:06 ecs-af06 systemd[1]: lab3-a.service: Main process exited, code=killed, status=9/KILL
+Nov 09 21:19:06 ecs-af06 systemd[1]: lab3-a.service: Failed with result 'oom-kill'.

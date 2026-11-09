@@ -1,0 +1,4 @@
+step,target_rps,gc_cycles_observed,gc_cpu_s_per_s,process_cpu_s_per_s
+1,10,23.5714,0.000830928,0.0203535
+2,20,50.3571,0.00208595,0.0343863
+3,30,,,

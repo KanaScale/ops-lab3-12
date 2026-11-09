@@ -1,0 +1,3 @@
+gc_cycles_observed increase(go_gc_cycles_total{job="enrolld"}[${window}])
+gc_cpu_s_per_s rate(go_gc_cpu_seconds_total{job="enrolld"}[${window}])
+process_cpu_s_per_s rate(process_cpu_seconds_total{job="enrolld"}[${window}])

@@ -1,0 +1,3 @@
+Result=oom-kill
+ExecMainStatus=9
+ActiveState=failed

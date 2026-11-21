@@ -3,9 +3,31 @@ package main
 import (
 	"encoding/json"
 	"math"
+	"path/filepath"
 	"testing"
 	"time"
 )
+
+func TestNodeSlotsDelayOnlyOverflowInstances(t *testing.T) {
+	log, err := openCSV(filepath.Join(t.TempDir(), "instances.csv"), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer log.f.Close()
+	s := &scaler{opt: options{BasePort: 8101, NodeSlots: 2, nodeWait: 240 * time.Second, pull: 20 * time.Second}, instLog: log}
+	first := s.create("v1", false, "初始实例")
+	second := s.create("v1", false, "初始实例")
+	third := s.create("v1", false, "扩容")
+	if first.state != stPulling || second.state != stPulling || third.state != stNodeWait {
+		t.Fatalf("前两台应直接拉镜像，第三台应等待节点：%s、%s、%s", first.state, second.state, third.state)
+	}
+	if got := third.nodeUntil.Sub(third.created); got != 240*time.Second {
+		t.Errorf("节点等待应为 240 秒，实际 %s", got)
+	}
+	if got := third.pullUntil.Sub(third.created); got != 260*time.Second {
+		t.Errorf("节点等待加拉镜像应为 260 秒，实际 %s", got)
+	}
+}
 
 func TestDesiredReplicas(t *testing.T) {
 	nan := math.NaN()

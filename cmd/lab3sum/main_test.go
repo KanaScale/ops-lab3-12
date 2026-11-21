@@ -7,6 +7,22 @@ import (
 	"testing"
 )
 
+func TestWriteInstancesSeparatesNodeWait(t *testing.T) {
+	const t0 int64 = 1000000
+	inst := []event{
+		{ms: t0 + 1000, who: "127.0.0.1:8103", v: "v1", ev: "created"},
+		{ms: t0 + 241000, who: "127.0.0.1:8103", v: "v1", ev: "node-ready"},
+		{ms: t0 + 261000, who: "127.0.0.1:8103", v: "v1", ev: "started"},
+		{ms: t0 + 324000, who: "127.0.0.1:8103", v: "v1", ev: "ready"},
+	}
+	var b strings.Builder
+	writeInstances(&b, inst, t0, t0+400000, func(ms int64) float64 { return float64(ms-t0) / 1000 })
+	want := "| 127.0.0.1:8103 | v1 | 1.0 | 241.0 | 261.0 | 324.0 | - | 240.0 | 20.0 | 63.0 | 323.0 | 0 |"
+	if !strings.Contains(b.String(), want) {
+		t.Errorf("节点等待与拉镜像应分别统计；期望 %q，得到：\n%s", want, b.String())
+	}
+}
+
 func TestSummarize(t *testing.T) {
 	dir := t.TempDir()
 	write := func(name, s string) {
@@ -33,7 +49,7 @@ func TestSummarize(t *testing.T) {
 		"| 2 | 5 | 3 | 30 | 5 | 2 |", // 第 2～4 秒连成一段缺口
 		"缺口共 3 秒",
 		"实例·分钟（从创建算起，只计负载期间）：0.2", // 6 秒 + 5 秒 = 11 秒 ≈ 0.18 分钟
-		"| 127.0.0.1:8102 | v1 | 1.0 | 1.5 | 4.0 | - | 0.5 | 2.5 | 3.0 | 0 |",
+		"| 127.0.0.1:8102 | v1 | 1.0 | - | 1.5 | 4.0 | - | - | 0.5 | 2.5 | 3.0 | 0 |",
 		"| 2.0 | kill | 127.0.0.1:8101 | down 127.0.0.1:8101 | 1.5 | up 127.0.0.1:8101 | 3.0 | 5 |",
 	} {
 		if !strings.Contains(out, want) {
@@ -64,7 +80,7 @@ func TestMarksWindowAndAll(t *testing.T) {
 	}
 	out := b.String()
 	for _, want := range []string{
-		"| 127.0.0.1:8101 | v1 | -100.0 | - | - | - | - | - | - | 1 |", // 负载开始以前的重启不计
+		"| 127.0.0.1:8101 | v1 | -100.0 | - | - | - | - | - | - | - | - | 1 |", // 负载开始以前的重启不计
 		"| 1.0 | pause | * | down 等 2 台 | 0.5 | 2 台都恢复 | 2.2 | 4 |",
 		"| 2.0 | resume | * | - | - | - | - | - |",
 	} {

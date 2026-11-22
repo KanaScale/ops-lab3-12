@@ -50,6 +50,7 @@ type config struct {
 	Warmup      string  `json:"warmup"`
 	DrainDelay  string  `json:"drain_delay"`
 	ReportMax   int     `json:"report_max"`
+	EnrollMax   int     `json:"enroll_max"`
 	LeakKB      int     `json:"leak_kb"`
 	Cgroup      string  `json:"cgroup"`
 	GoVersion   string  `json:"go_version"`
@@ -73,6 +74,7 @@ type server struct {
 	warm     atomic.Bool // 预热已结束
 	draining atomic.Bool // 收到了 SIGTERM，正在停止
 	reports  chan struct{}
+	enrolls  chan struct{}
 	leakMu   sync.Mutex
 	leaked   [][]byte
 
@@ -98,6 +100,7 @@ func main() {
 	flag.DurationVar(&cfg.warmup, "warmup", 0, "预热时长：启动后这么久之内未就绪，业务接口返回 503")
 	flag.DurationVar(&drainDelay, "drain-delay", 2*time.Second, "收到 SIGTERM 后，先报未就绪、继续服务这么久，再停止接收新请求")
 	flag.IntVar(&cfg.ReportMax, "report-max", 0, "/api/report 同时处理的上限，超出的立即返回 503；0 表示不限")
+	flag.IntVar(&cfg.EnrollMax, "enroll-max", 0, "/api/enroll 同时等待落盘的上限，超出的立即返回 503；0 表示不限")
 	flag.IntVar(&cfg.LeakKB, "leak-kb", 0, "每个读请求泄漏这么多 KB 内存（永不释放），任务 D2 用；0 表示不泄漏")
 	benchN := flag.Int("bench-fsync", 0, "不启动服务，只在数据目录里做 N 次“追加 + fsync”并打印耗时分布")
 	burnN := flag.Int("burn", 0, "不启动服务，只让 N 个线程忙 -for 这么久，打印 cgroup 的节流计数（任务 A1）")
@@ -123,8 +126,8 @@ func main() {
 		}
 		return
 	}
-	if cfg.Pool < 1 || cfg.Work < 0 || cfg.DBMs < 0 || cfg.ReportMax < 0 || cfg.LeakKB < 0 {
-		log.Fatal("-pool 至少为 1，-work、-db-ms、-report-max、-leak-kb 不能为负")
+	if cfg.Pool < 1 || cfg.Work < 0 || cfg.DBMs < 0 || cfg.ReportMax < 0 || cfg.EnrollMax < 0 || cfg.LeakKB < 0 {
+		log.Fatal("-pool 至少为 1，-work、-db-ms、-report-max、-enroll-max、-leak-kb 不能为负")
 	}
 
 	cfg.GoVersion = runtime.Version()
@@ -202,6 +205,9 @@ func newServer(cfg config, poolTimeout, interval time.Duration) (*server, error)
 	}
 	if cfg.ReportMax > 0 {
 		s.reports = make(chan struct{}, cfg.ReportMax)
+	}
+	if cfg.EnrollMax > 0 {
+		s.enrolls = make(chan struct{}, cfg.EnrollMax)
 	}
 
 	s.exports = make([]byte, 1<<20)
@@ -346,6 +352,15 @@ func (s *server) handleEnroll(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(io.LimitReader(r.Body, 4096)).Decode(&req); err != nil || req.Student == "" || req.Course == "" {
 		http.Error(w, `请求体应为 {"student":"…","course":"…"}`, http.StatusBadRequest)
 		return
+	}
+	if s.enrolls != nil {
+		select {
+		case s.enrolls <- struct{}{}:
+			defer func() { <-s.enrolls }()
+		default:
+			http.Error(w, "写请求并发已达上限", http.StatusServiceUnavailable)
+			return
+		}
 	}
 	seq := s.seq.Add(1)
 	line, _ := json.Marshal(record{Seq: seq, T: time.Now().UnixNano(), Student: req.Student, Course: req.Course})

@@ -199,6 +199,58 @@ func TestEnrollModes(t *testing.T) {
 	}
 }
 
+func TestEnrollMaxRejectsExcessBeforeCommit(t *testing.T) {
+	orig := syncFile
+	entered := make(chan struct{})
+	release := make(chan struct{})
+	syncFile = func(f *os.File) error {
+		close(entered)
+		<-release
+		return orig(f)
+	}
+	t.Cleanup(func() { syncFile = orig })
+
+	_, ts := testServer(t, config{EnrollMax: 1})
+	first := make(chan int, 1)
+	go func() {
+		resp, err := http.Post(ts.URL+"/api/enroll", "application/json", strings.NewReader(`{"student":"s1","course":"c1"}`))
+		if err != nil {
+			first <- 0
+			return
+		}
+		resp.Body.Close()
+		first <- resp.StatusCode
+	}()
+	select {
+	case <-entered:
+	case <-time.After(2 * time.Second):
+		close(release)
+		t.Fatal("第一笔写入没有到达 fsync")
+	}
+	client := &http.Client{Timeout: 2 * time.Second}
+	resp, err := client.Post(ts.URL+"/api/enroll", "application/json", strings.NewReader(`{"student":"s2","course":"c1"}`))
+	if err != nil {
+		close(release)
+		t.Fatal(err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusServiceUnavailable {
+		close(release)
+		t.Fatalf("并发上限已满时应返回 503，得到 %d", resp.StatusCode)
+	}
+	close(release)
+	if code := <-first; code != http.StatusOK {
+		t.Fatalf("第一笔写入返回 %d", code)
+	}
+	m := scrape(t, ts)
+	if v := metricValue(m, "enroll_commits_total"); v != 1 {
+		t.Errorf("实际提交数 = %v，期望 1", v)
+	}
+	if v := metricValue(m, `http_requests_total{route="/api/enroll",code="503"}`); v != 1 {
+		t.Errorf("拒绝数 = %v，期望 1", v)
+	}
+}
+
 // 组提交时，后台正在 fsync 的那段时间里到达的提交会合并进下一次 fsync。
 func TestGroupCommitBatches(t *testing.T) {
 	// tmpfs 上 fsync 几乎不花时间，提交来不及排队，偶尔一次也合并不了；这里让每次 fsync 多花 2 ms，接近云盘。

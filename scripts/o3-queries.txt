@@ -1,0 +1,11 @@
+# 按 steps.csv 的阶段窗口查询；首 5 秒不计入，避开阶段切换。
+# 四台实例的日志在同一物理磁盘上，fsync 次数相加但不能视作互不干扰的设备。
+fsync_per_s sum(rate(enroll_fsync_duration_seconds_count{job="instances"}[${window}]))
+fsync_mean_ms 1000 * sum(rate(enroll_fsync_duration_seconds_sum{job="instances"}[${window}])) / sum(rate(enroll_fsync_duration_seconds_count{job="instances"}[${window}]))
+instance_cpu_cores sum(rate(cgroup_cpu_usage_seconds_total{job="instances"}[${window}]))
+disk_w_per_s rate(node_disk_writes_completed_total{device="${disk}"}[${window}])
+disk_w_await_ms 1000 * rate(node_disk_write_time_seconds_total{device="${disk}"}[${window}]) / rate(node_disk_writes_completed_total{device="${disk}"}[${window}])
+disk_f_per_s rate(node_disk_flush_requests_total{device="${disk}"}[${window}])
+disk_f_await_ms 1000 * rate(node_disk_flush_requests_time_seconds_total{device="${disk}"}[${window}]) / rate(node_disk_flush_requests_total{device="${disk}"}[${window}])
+disk_aqu_sz rate(node_disk_io_time_weighted_seconds_total{device="${disk}"}[${window}])
+disk_util rate(node_disk_io_time_seconds_total{device="${disk}"}[${window}])

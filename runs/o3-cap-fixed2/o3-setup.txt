@@ -1,0 +1,5 @@
+数据盘: /dev/vda1 (ext4), 整块设备 vda
+负载: 120@30s,120~1200@20s,1200@150s,1200~120@20s,120@30s
+每实例: CPUQuota=25%, MemoryMax=512M, AllowedCPUs=1, -warmup 60s -sync each -enroll-max 128
+QPS 目标: 300 请求/秒/实例（仅 reactive 轮）
+每个实例有独立 enroll.log，所有文件位于同一块盘；无跨实例互斥锁。

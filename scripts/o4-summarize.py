@@ -3,6 +3,7 @@
 import csv
 import datetime as dt
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -91,6 +92,15 @@ def main(path):
     for name, p in sorted(pods.items(), key=lambda kv: kv[1]["created"]):
         ready = f"{p['ready'] - start:.1f}" if p["ready"] is not None else "-"
         lines.append(f"| {name} | {p['created'] - start:.1f} | {ready} | {p['restarts']} |")
+    metrics_files = sorted(run.glob("pod-metrics-*.txt"))
+    if metrics_files:
+        lines.extend(["", "## Pod 累计业务请求（压测后抓取）", "", "| Pod | 200 | 499 | 503 |", "|---|---:|---:|---:|"])
+        for file in metrics_files:
+            counters = {code: int(value) for code, value in re.findall(
+                r'^http_requests_total\{route="/api/courses/\{id\}",code="([0-9]+)"\} ([0-9]+)$',
+                file.read_text(), re.MULTILINE,
+            )}
+            lines.append(f"| {file.stem.removeprefix('pod-metrics-')} | {counters.get('200', 0)} | {counters.get('499', 0)} | {counters.get('503', 0)} |")
     output = "\n".join(lines) + "\n"
     (run / "summary.md").write_text(output)
     print(output)

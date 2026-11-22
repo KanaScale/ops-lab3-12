@@ -1,0 +1,9 @@
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                 SELECTOR
+deployment.apps/enrolld   2/2     2            2           20m   enrolld      localhost/enrolld:o4   app=enrolld-o4
+
+NAME                                          REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/enrolld   Deployment/enrolld   cpu: 0%/70%   2         4         2          20m
+
+NAME                           READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+pod/enrolld-6889d7c88c-ssp86   1/1     Running   0          20m   10.42.0.31   ecs-af06   <none>           <none>
+pod/enrolld-6889d7c88c-v62ht   1/1     Running   0          13m   10.42.0.33   ecs-af06   <none>           <none>

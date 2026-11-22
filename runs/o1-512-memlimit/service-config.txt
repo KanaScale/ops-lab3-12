@@ -1,0 +1,4 @@
+ExecStart={ path=/root/ops-lab3-12-o1-512/bin/enrolld ; argv[]=/root/ops-lab3-12-o1-512/bin/enrolld -addr 127.0.0.1:8081 -data /root/ops-lab3-12-o1-512/data/a ; ignore_errors=no ; start_time=[Sun 2026-11-22 17:48:55 CST] ; stop_time=[n/a] ; pid=3300446 ; code=(null) ; status=0/0 }
+MemoryMax=536870912
+MemorySwapMax=0
+Environment=GOMEMLIMIT=170MiB GOGC=100

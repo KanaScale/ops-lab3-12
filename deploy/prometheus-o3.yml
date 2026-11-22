@@ -1,0 +1,17 @@
+# O3 独立监控：数据目录和端口与旧实验分开。
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: instances
+    scrape_interval: 5s
+    file_sd_configs:
+      - files: ["../data/targets.json"]
+  - job_name: lbd
+    scrape_interval: 1s
+    static_configs:
+      - targets: ["127.0.0.1:8092"]
+  - job_name: node
+    static_configs:
+      - targets: ["127.0.0.1:9100"]

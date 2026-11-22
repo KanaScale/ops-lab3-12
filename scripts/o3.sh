@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # O3：写请求经 lbd，比较 2 台常驻、4 台常驻和 B2 式按 QPS 扩到 4 台。
+# 使用独立端口：业务 8082，lbd 管理 8092，scaler 管理 8093，Prometheus 9091。
 # 先在真实数据盘运行 -bench-fsync，并把输出保存为 runs/o3-fsync-bench.txt。
 # 用法：sudo bash scripts/o3.sh <平时 rps> <峰值 rps>
 set -euo pipefail
@@ -21,10 +22,10 @@ done
 if pgrep -x scaler >/dev/null || pgrep -x loadgen >/dev/null; then
   die '已有 scaler 或 loadgen 在运行，请先确认实验机空闲'
 fi
-curl -fsS -m 3 http://127.0.0.1:8090/config >/dev/null || die 'lbd 未启动'
-curl -fsS -m 3 http://127.0.0.1:9090/-/ready >/dev/null || die 'Prometheus 未就绪'
+curl -fsS -m 3 http://127.0.0.1:8092/config >/dev/null || die 'O3 lbd（8092）未启动'
+curl -fsS -m 3 http://127.0.0.1:9091/-/ready >/dev/null || die 'O3 Prometheus（9091）未就绪'
 curl -fsS -m 3 http://127.0.0.1:9100/metrics >/dev/null || die 'node_exporter 未启动'
-[ "$(curl -fsS -m 3 http://127.0.0.1:8090/backends)" = '[]' ] || die 'lbd 仍登记着旧后端，请先清理或重启 lbd'
+[ "$(curl -fsS -m 3 http://127.0.0.1:8092/backends)" = '[]' ] || die 'O3 lbd 仍登记着旧后端，请先清理或重启'
 
 # 每个实例有自己的 enroll.log，但它们都位于 data 所在的同一块真实磁盘。
 fstype=$(findmnt -no FSTYPE -T "$PWD/data")
@@ -57,7 +58,7 @@ wait_ready() {
   local wanted=$1 count
   for _ in $(seq 1 70); do
     kill -0 "$scaler_pid" 2>/dev/null || die "scaler 已退出；查看 data/$name-scaler.log"
-    count=$(curl -fsS -m 3 http://127.0.0.1:8091/instances 2>/dev/null | grep -c '"state": "ready"' || true)
+    count=$(curl -fsS -m 3 http://127.0.0.1:8093/instances 2>/dev/null | grep -c '"state": "ready"' || true)
     [ "$count" -ge "$wanted" ] && return 0
     sleep 2
   done
@@ -68,13 +69,16 @@ run_case() {
   local name=$1 wanted=$2
   shift 2
   echo "== $name：启动 scaler，等 $wanted 个实例就绪"
-  taskset -c 0 bin/scaler -cpus 1 -quota 25 -args '-warmup 60s -sync each' "$@" >"data/$name-scaler.log" 2>&1 &
+  taskset -c 0 bin/scaler -cpus 1 -quota 25 -args '-warmup 60s -sync each' \
+    -lb http://127.0.0.1:8092 -prom http://127.0.0.1:9091 -admin 127.0.0.1:8093 \
+    "$@" >"data/$name-scaler.log" 2>&1 &
   scaler_pid=$!
   wait_ready "$wanted"
   echo "== $name：写请求压测 250 秒"
   LC_ALL=C S_TIME_FORMAT=ISO iostat -d -x -t "$disk" 1 >"data/$name-iostat.log" 2>&1 &
   collector_pid=$!
-  scripts/run3.sh "$name" -url http://127.0.0.1:8080/api/enroll \
+  LB=http://127.0.0.1:8092 SCALER=http://127.0.0.1:8093 scripts/run3.sh "$name" \
+    -url http://127.0.0.1:8082/api/enroll \
     -body '{"student":"s{{seq}}","course":"c1"}' -plan "$plan"
   kill "$collector_pid" 2>/dev/null || true
   wait "$collector_pid" 2>/dev/null || true
@@ -89,7 +93,7 @@ run_case() {
     echo '每个实例有独立 enroll.log，所有文件位于同一块盘；无跨实例互斥锁。'
   } >"runs/$name/o3-setup.txt"
   bash scripts/o2-summarize.sh "$name"
-  bin/promsteps -steps "runs/$name/steps.csv" -prom http://127.0.0.1:9090 \
+  bin/promsteps -steps "runs/$name/steps.csv" -prom http://127.0.0.1:9091 \
     -var "disk=$disk" -queries scripts/o3-queries.txt >"runs/$name/o3-metrics.csv"
   kill -INT "$scaler_pid"
   wait "$scaler_pid"

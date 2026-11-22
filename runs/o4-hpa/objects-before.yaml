@@ -1,0 +1,557 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"enrolld","namespace":"lab3-o4"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"enrolld-o4"}},"template":{"metadata":{"labels":{"app":"enrolld-o4"}},"spec":{"containers":[{"args":["-addr","0.0.0.0:8081","-data","/data","-warmup","60s","-work","1000000"],"image":"localhost/enrolld:o4","imagePullPolicy":"Never","name":"enrolld","ports":[{"containerPort":8081,"name":"http"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/readyz","port":"http"},"periodSeconds":1,"successThreshold":2,"timeoutSeconds":1},"resources":{"limits":{"cpu":"250m","memory":"128Mi"},"requests":{"cpu":"250m","memory":"32Mi"}},"volumeMounts":[{"mountPath":"/data","name":"data"}]}],"terminationGracePeriodSeconds":15,"volumes":[{"emptyDir":{},"name":"data"}]}}}}
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    generation: 1
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "835"
+    uid: 0f1afe4f-583a-4244-a6b4-79f8472726b5
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: enrolld-o4
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: enrolld-o4
+      spec:
+        containers:
+        - args:
+          - -addr
+          - 0.0.0.0:8081
+          - -data
+          - /data
+          - -warmup
+          - 60s
+          - -work
+          - "1000000"
+          image: localhost/enrolld:o4
+          imagePullPolicy: Never
+          name: enrolld
+          ports:
+          - containerPort: 8081
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: http
+              scheme: HTTP
+            periodSeconds: 1
+            successThreshold: 2
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 250m
+              memory: 128Mi
+            requests:
+              cpu: 250m
+              memory: 32Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 15
+        volumes:
+        - emptyDir: {}
+          name: data
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2026-11-22T11:46:11Z"
+      lastUpdateTime: "2026-11-22T11:46:11Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-22T11:42:13Z"
+      lastUpdateTime: "2026-11-22T11:46:11Z"
+      message: ReplicaSet "enrolld-6889d7c88c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+    terminatingReplicas: 0
+    updatedReplicas: 2
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"enrolld","namespace":"lab3-o4"},"spec":{"ports":[{"name":"http","nodePort":30080,"port":8081,"targetPort":"http"}],"selector":{"app":"enrolld-o4"},"type":"NodePort"}}
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "498"
+    uid: c3cd5c87-987c-4ae3-b5df-f2c351a7ba58
+  spec:
+    clusterIP: 10.43.127.178
+    clusterIPs:
+    - 10.43.127.178
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30080
+      port: 8081
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: enrolld-o4
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: autoscaling/v2
+  kind: HorizontalPodAutoscaler
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"autoscaling/v2","kind":"HorizontalPodAutoscaler","metadata":{"annotations":{},"name":"enrolld","namespace":"lab3-o4"},"spec":{"maxReplicas":4,"metrics":[{"resource":{"name":"cpu","target":{"averageUtilization":70,"type":"Utilization"}},"type":"Resource"}],"minReplicas":2,"scaleTargetRef":{"apiVersion":"apps/v1","kind":"Deployment","name":"enrolld"}}}
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    generation: 1
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "863"
+    uid: 3dbe657d-2ebf-4da3-af23-17d720e7e65b
+  spec:
+    maxReplicas: 4
+    metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 70
+          type: Utilization
+      type: Resource
+    minReplicas: 2
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: enrolld
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-22T11:42:13Z"
+      message: recommended size matches current size
+      reason: ReadyForNewScale
+      status: "True"
+      type: AbleToScale
+    - lastTransitionTime: "2026-11-22T11:46:58Z"
+      message: the HPA was able to successfully calculate a replica count from cpu
+        resource utilization (percentage of request)
+      reason: ValidMetricFound
+      status: "True"
+      type: ScalingActive
+    - lastTransitionTime: "2026-11-22T11:47:13Z"
+      message: the desired replica count is less than the minimum replica count
+      reason: TooFewReplicas
+      status: "True"
+      type: ScalingLimited
+    currentMetrics:
+    - resource:
+        current:
+          averageUtilization: 0
+          averageValue: 1m
+        name: cpu
+      type: Resource
+    currentReplicas: 2
+    desiredReplicas: 2
+    observedGeneration: 1
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    generateName: enrolld-6889d7c88c-
+    generation: 1
+    labels:
+      app: enrolld-o4
+      pod-template-hash: 6889d7c88c
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: enrolld-6889d7c88c
+      uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+    resourceVersion: "825"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  spec:
+    containers:
+    - args:
+      - -addr
+      - 0.0.0.0:8081
+      - -data
+      - /data
+      - -warmup
+      - 60s
+      - -work
+      - "1000000"
+      image: localhost/enrolld:o4
+      imagePullPolicy: Never
+      name: enrolld
+      ports:
+      - containerPort: 8081
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /readyz
+          port: http
+          scheme: HTTP
+        periodSeconds: 1
+        successThreshold: 2
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 128Mi
+        requests:
+          cpu: 250m
+          memory: 32Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7bcwm
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ecs-af06
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 15
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: data
+    - name: kube-api-access-7bcwm
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    allocatedResources:
+      cpu: 250m
+      memory: 32Mi
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:45:03Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:42:13Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:46:04Z"
+      observedGeneration: 1
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:46:04Z"
+      observedGeneration: 1
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:42:13Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - allocatedResources:
+        cpu: 250m
+        memory: 32Mi
+      containerID: containerd://995524b6d16e6c0861add8e044f6c1a86906d9536b59a7d35742833034472f53
+      image: localhost/enrolld:o4
+      imageID: sha256:3f71d00c63b47e2baf379752fad99dd275ebdd31099957c79b95a48b857d9829
+      lastState: {}
+      name: enrolld
+      ready: true
+      resources:
+        limits:
+          cpu: 250m
+          memory: 128Mi
+        requests:
+          cpu: 250m
+          memory: 32Mi
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-11-22T11:45:03Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          uid: 0
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7bcwm
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.0.171
+    hostIPs:
+    - ip: 192.168.0.171
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.42.0.30
+    podIPs:
+    - ip: 10.42.0.30
+    qosClass: Burstable
+    resources:
+      limits:
+        cpu: 250m
+        memory: 128Mi
+      requests:
+        cpu: 232m
+        memory: 32Mi
+    startTime: "2026-11-22T11:42:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    generateName: enrolld-6889d7c88c-
+    generation: 1
+    labels:
+      app: enrolld-o4
+      pod-template-hash: 6889d7c88c
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: enrolld-6889d7c88c
+      uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+    resourceVersion: "833"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  spec:
+    containers:
+    - args:
+      - -addr
+      - 0.0.0.0:8081
+      - -data
+      - /data
+      - -warmup
+      - 60s
+      - -work
+      - "1000000"
+      image: localhost/enrolld:o4
+      imagePullPolicy: Never
+      name: enrolld
+      ports:
+      - containerPort: 8081
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /readyz
+          port: http
+          scheme: HTTP
+        periodSeconds: 1
+        successThreshold: 2
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 128Mi
+        requests:
+          cpu: 250m
+          memory: 32Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mk5gh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ecs-af06
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 15
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: data
+    - name: kube-api-access-mk5gh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    allocatedResources:
+      cpu: 250m
+      memory: 32Mi
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:45:10Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:42:13Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:46:11Z"
+      observedGeneration: 1
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:46:11Z"
+      observedGeneration: 1
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-22T11:42:13Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - allocatedResources:
+        cpu: 250m
+        memory: 32Mi
+      containerID: containerd://aef634fe98f0613f81055f8304ebd73bb4b7582d3ae0ba51e3884aed82c03446
+      image: localhost/enrolld:o4
+      imageID: sha256:3f71d00c63b47e2baf379752fad99dd275ebdd31099957c79b95a48b857d9829
+      lastState: {}
+      name: enrolld
+      ready: true
+      resources:
+        limits:
+          cpu: 250m
+          memory: 128Mi
+        requests:
+          cpu: 250m
+          memory: 32Mi
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-11-22T11:45:10Z"
+      user:
+        linux:
+          gid: 0
+          supplementalGroups:
+          - 0
+          uid: 0
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-mk5gh
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.0.171
+    hostIPs:
+    - ip: 192.168.0.171
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.42.0.31
+    podIPs:
+    - ip: 10.42.0.31
+    qosClass: Burstable
+    resources:
+      limits:
+        cpu: 250m
+        memory: 128Mi
+      requests:
+        cpu: 232m
+        memory: 32Mi
+    startTime: "2026-11-22T11:42:13Z"
+kind: List
+metadata:
+  resourceVersion: ""

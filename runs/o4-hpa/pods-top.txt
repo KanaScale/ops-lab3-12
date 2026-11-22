@@ -1,0 +1,5 @@
+NAME                       CPU(cores)   MEMORY(bytes)   
+enrolld-6889d7c88c-dkd44   1m           5Mi             
+enrolld-6889d7c88c-r7566   1m           13Mi            
+enrolld-6889d7c88c-ssp86   82m          8Mi             
+enrolld-6889d7c88c-v62ht   1m           6Mi             

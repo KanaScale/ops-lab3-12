@@ -1,0 +1,81 @@
+apiVersion: v1
+items:
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 10.42.0.30
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: ecs-af06
+    targetRef:
+      kind: Pod
+      name: enrolld-6889d7c88c-r7566
+      namespace: lab3-o4
+      uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  - addresses:
+    - 10.42.0.31
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: ecs-af06
+    targetRef:
+      kind: Pod
+      name: enrolld-6889d7c88c-ssp86
+      namespace: lab3-o4
+      uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  - addresses:
+    - 10.42.0.33
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: ecs-af06
+    targetRef:
+      kind: Pod
+      name: enrolld-6889d7c88c-v62ht
+      namespace: lab3-o4
+      uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  - addresses:
+    - 10.42.0.34
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: ecs-af06
+    targetRef:
+      kind: Pod
+      name: enrolld-6889d7c88c-dkd44
+      namespace: lab3-o4
+      uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: EndpointSlice
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2026-11-22T11:52:45Z"
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    generateName: enrolld-
+    generation: 41
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: enrolld
+    name: enrolld-kh9qv
+    namespace: lab3-o4
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: enrolld
+      uid: c3cd5c87-987c-4ae3-b5df-f2c351a7ba58
+    resourceVersion: "1277"
+    uid: c3ea343f-b9fc-4150-be16-a9d1cb75ae1f
+  ports:
+  - name: http
+    port: 8081
+    protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""

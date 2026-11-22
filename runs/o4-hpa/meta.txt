@@ -1,0 +1,8 @@
+开始: 2026-11-22T19:47:22+08:00
+commit: 8f3be4c8e73d381c495a79d30b1c5276c756db4e
+plan: 33@120s,33~330@30s,330@300s,330~33@60s,33@120s
+host: Linux 6.8.0-136-generic x86_64
+k3s: k3s version v1.37.2+k3s1 (f6973cb8)
+node: v1.37.2+k3s1
+loadgen: taskset -c 0 bin/loadgen -url http://127.0.0.1:30080/api/courses/1 -plan '33@120s,33~330@30s,330@300s,330~33@60s,33@120s' -slo 0.2s -stop-below 0 -seed 1
+结束: 2026-11-22T19:57:57+08:00

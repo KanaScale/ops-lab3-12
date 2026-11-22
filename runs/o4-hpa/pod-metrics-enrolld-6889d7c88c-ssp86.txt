@@ -1,0 +1,222 @@
+# HELP enrolld_info 服务参数，值恒为 1；参数在标签里
+# TYPE enrolld_info gauge
+enrolld_info{version="v1",work="1000000",pool="32",db_ms="2",sync="each",go_version="go1.26.9"} 1
+# HELP http_requests_total 处理完的请求数，按接口和状态码分
+# TYPE http_requests_total counter
+http_requests_total{route="/api/courses/{id}",code="200"} 50609
+http_requests_total{route="/api/courses/{id}",code="499"} 26
+http_requests_total{route="/api/courses/{id}",code="503"} 1
+# HELP http_request_duration_seconds 服务端耗时：从进入处理函数到处理函数返回（不含内核里的排队和网络）
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.001"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.002"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.005"} 24230
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.01"} 31335
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.02"} 35488
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.05"} 35608
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.1"} 47409
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.2"} 48382
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="0.5"} 49363
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="1"} 50064
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="2"} 50325
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="5"} 50588
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="200",le="+Inf"} 50609
+http_request_duration_seconds_sum{route="/api/courses/{id}",code="200"} 3388.2171063700075
+http_request_duration_seconds_count{route="/api/courses/{id}",code="200"} 50609
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.001"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.002"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.005"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.01"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.02"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.05"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.1"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.2"} 2
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="0.5"} 2
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="1"} 3
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="2"} 9
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="5"} 20
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="499",le="+Inf"} 26
+http_request_duration_seconds_sum{route="/api/courses/{id}",code="499"} 88.45335288099999
+http_request_duration_seconds_count{route="/api/courses/{id}",code="499"} 26
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.001"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.002"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.005"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.01"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.02"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.05"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.1"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.2"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="0.5"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="1"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="2"} 0
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="5"} 1
+http_request_duration_seconds_bucket{route="/api/courses/{id}",code="503",le="+Inf"} 1
+http_request_duration_seconds_sum{route="/api/courses/{id}",code="503"} 2.591275759
+http_request_duration_seconds_count{route="/api/courses/{id}",code="503"} 1
+# HELP http_inflight_requests 正在处理的请求数（在途）
+# TYPE http_inflight_requests gauge
+http_inflight_requests{route="/api/courses/{id}"} 0
+http_inflight_requests{route="/api/enroll"} 0
+http_inflight_requests{route="/api/export"} 0
+http_inflight_requests{route="/api/report"} 0
+# HELP enroll_commits_total 已确认落盘方式完成、返回给客户端的选课记录数
+# TYPE enroll_commits_total counter
+enroll_commits_total 0
+# HELP enrolld_ready 就绪检查的结果：1 就绪，0 未就绪（预热中或停止中）
+# TYPE enrolld_ready gauge
+enrolld_ready 1
+# HELP enrolld_leaked_bytes -leak-kb 累计泄漏、再也不会释放的内存（字节）
+# TYPE enrolld_leaked_bytes gauge
+enrolld_leaked_bytes 0
+# HELP db_pool_size 连接池大小
+# TYPE db_pool_size gauge
+db_pool_size 32
+# HELP db_pool_in_use 正在被查询占用的连接数
+# TYPE db_pool_in_use gauge
+db_pool_in_use 0
+# HELP db_pool_wait_seconds 等到一个空闲连接花的时间（含等待超时的请求）
+# TYPE db_pool_wait_seconds histogram
+db_pool_wait_seconds_bucket{le="0.001"} 50591
+db_pool_wait_seconds_bucket{le="0.002"} 50600
+db_pool_wait_seconds_bucket{le="0.005"} 50606
+db_pool_wait_seconds_bucket{le="0.01"} 50616
+db_pool_wait_seconds_bucket{le="0.02"} 50616
+db_pool_wait_seconds_bucket{le="0.05"} 50616
+db_pool_wait_seconds_bucket{le="0.1"} 50622
+db_pool_wait_seconds_bucket{le="0.2"} 50624
+db_pool_wait_seconds_bucket{le="0.5"} 50624
+db_pool_wait_seconds_bucket{le="1"} 50627
+db_pool_wait_seconds_bucket{le="2"} 50628
+db_pool_wait_seconds_bucket{le="5"} 50636
+db_pool_wait_seconds_bucket{le="+Inf"} 50636
+db_pool_wait_seconds_sum 30.345143713999832
+db_pool_wait_seconds_count 50636
+# HELP db_query_duration_seconds 拿到连接以后查询本身占用连接的时间
+# TYPE db_query_duration_seconds histogram
+db_query_duration_seconds_bucket{le="0.001"} 0
+db_query_duration_seconds_bucket{le="0.002"} 0
+db_query_duration_seconds_bucket{le="0.005"} 37169
+db_query_duration_seconds_bucket{le="0.01"} 40811
+db_query_duration_seconds_bucket{le="0.02"} 41860
+db_query_duration_seconds_bucket{le="0.05"} 41884
+db_query_duration_seconds_bucket{le="0.1"} 49048
+db_query_duration_seconds_bucket{le="0.2"} 50047
+db_query_duration_seconds_bucket{le="0.5"} 50454
+db_query_duration_seconds_bucket{le="1"} 50539
+db_query_duration_seconds_bucket{le="2"} 50584
+db_query_duration_seconds_bucket{le="5"} 50605
+db_query_duration_seconds_bucket{le="+Inf"} 50609
+db_query_duration_seconds_sum 1185.525957548999
+db_query_duration_seconds_count 50609
+# HELP enroll_fsync_duration_seconds 每次 fsync 的耗时（应用自己量的）
+# TYPE enroll_fsync_duration_seconds histogram
+enroll_fsync_duration_seconds_bucket{le="0.0001"} 0
+enroll_fsync_duration_seconds_bucket{le="0.0002"} 0
+enroll_fsync_duration_seconds_bucket{le="0.0005"} 0
+enroll_fsync_duration_seconds_bucket{le="0.001"} 0
+enroll_fsync_duration_seconds_bucket{le="0.002"} 0
+enroll_fsync_duration_seconds_bucket{le="0.005"} 0
+enroll_fsync_duration_seconds_bucket{le="0.01"} 0
+enroll_fsync_duration_seconds_bucket{le="0.02"} 0
+enroll_fsync_duration_seconds_bucket{le="0.05"} 0
+enroll_fsync_duration_seconds_bucket{le="0.1"} 0
+enroll_fsync_duration_seconds_bucket{le="0.2"} 0
+enroll_fsync_duration_seconds_bucket{le="0.5"} 0
+enroll_fsync_duration_seconds_bucket{le="+Inf"} 0
+enroll_fsync_duration_seconds_sum 0
+enroll_fsync_duration_seconds_count 0
+# HELP enroll_commit_batch_size 每次 fsync 落盘的记录条数
+# TYPE enroll_commit_batch_size histogram
+enroll_commit_batch_size_bucket{le="1"} 0
+enroll_commit_batch_size_bucket{le="2"} 0
+enroll_commit_batch_size_bucket{le="4"} 0
+enroll_commit_batch_size_bucket{le="8"} 0
+enroll_commit_batch_size_bucket{le="16"} 0
+enroll_commit_batch_size_bucket{le="32"} 0
+enroll_commit_batch_size_bucket{le="64"} 0
+enroll_commit_batch_size_bucket{le="128"} 0
+enroll_commit_batch_size_bucket{le="256"} 0
+enroll_commit_batch_size_bucket{le="512"} 0
+enroll_commit_batch_size_bucket{le="1024"} 0
+enroll_commit_batch_size_bucket{le="+Inf"} 0
+enroll_commit_batch_size_sum 0
+enroll_commit_batch_size_count 0
+# HELP process_cpu_seconds_total 进程累计用掉的 CPU 时间（user + system，秒）
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 106.07763399999999
+# HELP process_resident_memory_bytes 进程真正占用的物理内存 RSS（字节）
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 1.3983744e+07
+# HELP process_open_fds 打开的文件描述符数（含连接）
+# TYPE process_open_fds gauge
+process_open_fds 10
+# HELP process_threads 操作系统线程数
+# TYPE process_threads gauge
+process_threads 9
+# HELP process_cpu_wait_seconds_total 进程的线程在运行队列里等 CPU 的累计时间（秒），取自各线程的 /proc/self/task/*/schedstat；它的速率是平均有几个线程在等核，是 CPU 饱和的直接证据
+# TYPE process_cpu_wait_seconds_total counter
+process_cpu_wait_seconds_total 895.046282182
+# HELP process_start_time_seconds 进程的启动时刻（Unix 秒）；它变了，说明进程重启过，可以用 changes() 数重启次数
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.7953479102126882e+09
+# HELP go_goroutines goroutine 数
+# TYPE go_goroutines gauge
+go_goroutines 6
+# HELP go_gomaxprocs Go 同时用来执行代码的线程数上限（受 taskset 和 cgroup 的 CPU 限制影响）
+# TYPE go_gomaxprocs gauge
+go_gomaxprocs 2
+# HELP go_gc_cycles_total 完成的 GC 次数
+# TYPE go_gc_cycles_total counter
+go_gc_cycles_total 64
+# HELP go_sched_latencies_seconds goroutine 可以运行但在等执行线程（等 CPU）的时间；运行时的桶比这里细，换算时整桶归入不小于它上沿的那个桶，_sum 按每个桶的下沿估计
+# TYPE go_sched_latencies_seconds histogram
+go_sched_latencies_seconds_bucket{le="1e-05"} 16321
+go_sched_latencies_seconds_bucket{le="5e-05"} 17188
+go_sched_latencies_seconds_bucket{le="0.0001"} 17925
+go_sched_latencies_seconds_bucket{le="0.0005"} 18321
+go_sched_latencies_seconds_bucket{le="0.001"} 18486
+go_sched_latencies_seconds_bucket{le="0.002"} 18673
+go_sched_latencies_seconds_bucket{le="0.005"} 20021
+go_sched_latencies_seconds_bucket{le="0.01"} 20517
+go_sched_latencies_seconds_bucket{le="0.02"} 21158
+go_sched_latencies_seconds_bucket{le="0.05"} 21341
+go_sched_latencies_seconds_bucket{le="0.1"} 21404
+go_sched_latencies_seconds_bucket{le="0.2"} 25186
+go_sched_latencies_seconds_bucket{le="0.5"} 29378
+go_sched_latencies_seconds_bucket{le="1"} 30715
+go_sched_latencies_seconds_bucket{le="+Inf"} 31845
+go_sched_latencies_seconds_sum 4665.859427008
+go_sched_latencies_seconds_count 31845
+# HELP go_gc_cpu_seconds_total GC 用掉的 CPU 时间估计（秒）
+# TYPE go_gc_cpu_seconds_total counter
+go_gc_cpu_seconds_total 0.961097647
+# HELP go_heap_objects_bytes 堆上对象占用的字节数（含尚未回收的）
+# TYPE go_heap_objects_bytes gauge
+go_heap_objects_bytes 1.838064e+06
+# HELP cgroup_cpu_usage_seconds_total 本 cgroup 累计用掉的 CPU 时间（cpu.stat 的 usage_usec，秒）
+# TYPE cgroup_cpu_usage_seconds_total counter
+cgroup_cpu_usage_seconds_total 106.078424
+# HELP cgroup_cpu_periods_total 经历的配额周期数（cpu.stat 的 nr_periods）；没有设配额时不增长
+# TYPE cgroup_cpu_periods_total counter
+cgroup_cpu_periods_total 5766
+# HELP cgroup_cpu_throttled_periods_total 被节流的周期数（cpu.stat 的 nr_throttled）
+# TYPE cgroup_cpu_throttled_periods_total counter
+cgroup_cpu_throttled_periods_total 3601
+# HELP cgroup_cpu_throttled_seconds_total 被停的累计时间（cpu.stat 的 throttled_usec，秒）；按 CPU 分别累计，可以超过墙钟时间
+# TYPE cgroup_cpu_throttled_seconds_total counter
+cgroup_cpu_throttled_seconds_total 544.38883
+# HELP cgroup_cpu_limit_cores cpu.max 折合的核数（配额 ÷ 周期）；0 表示不限
+# TYPE cgroup_cpu_limit_cores gauge
+cgroup_cpu_limit_cores 0.25
+# HELP cgroup_memory_current_bytes 本 cgroup 当前占用的内存（memory.current，含页缓存）
+# TYPE cgroup_memory_current_bytes gauge
+cgroup_memory_current_bytes 8.47872e+06
+# HELP cgroup_memory_max_bytes 内存上限（memory.max）；0 表示不限
+# TYPE cgroup_memory_max_bytes gauge
+cgroup_memory_max_bytes 1.34217728e+08
+# HELP cgroup_memory_max_events_total 内存用量碰到 memory.max 的次数（memory.events 的 max）
+# TYPE cgroup_memory_max_events_total counter
+cgroup_memory_max_events_total 0
+# HELP cgroup_memory_oom_kills_total 本 cgroup 里被 OOM killer 杀掉的进程数（memory.events 的 oom_kill）
+# TYPE cgroup_memory_oom_kills_total counter
+cgroup_memory_oom_kills_total 0

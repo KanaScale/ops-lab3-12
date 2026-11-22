@@ -1,0 +1,1210 @@
+apiVersion: v1
+items:
+- action: Binding
+  apiVersion: v1
+  eventTime: "2026-11-22T11:51:44.124712Z"
+  firstTimestamp: null
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1204"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: null
+  message: Successfully assigned lab3-o4/enrolld-6889d7c88c-dkd44 to ecs-af06
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc53b74217d
+    namespace: lab3-o4
+    resourceVersion: "1210"
+    uid: 8906cc5e-1aad-47bd-969e-71222f14960d
+  reason: Scheduled
+  reportingComponent: default-scheduler
+  reportingInstance: default-scheduler-ecs-af06
+  source: {}
+  type: Normal
+- action: Binding
+  apiVersion: v1
+  eventTime: "2026-11-22T11:49:59.115386Z"
+  firstTimestamp: null
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "957"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: null
+  message: Successfully assigned lab3-o4/enrolld-6889d7c88c-v62ht to ecs-af06
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bacc868f948
+    namespace: lab3-o4
+    resourceVersion: "963"
+    uid: 6829523d-e7cc-49cd-950c-fe88ae360103
+  reason: Scheduled
+  reportingComponent: default-scheduler
+  reportingInstance: default-scheduler-ecs-af06
+  source: {}
+  type: Normal
+- action: Binding
+  apiVersion: v1
+  eventTime: "2026-11-22T11:42:13.812856Z"
+  firstTimestamp: null
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "505"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: null
+  message: Successfully assigned lab3-o4/enrolld-6889d7c88c-r7566 to ecs-af06
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b407237d7a4
+    namespace: lab3-o4
+    resourceVersion: "513"
+    uid: 2cfda06f-428c-4f61-b8b4-da8666f1a4d8
+  reason: Scheduled
+  reportingComponent: default-scheduler
+  reportingInstance: default-scheduler-ecs-af06
+  source: {}
+  type: Normal
+- action: Binding
+  apiVersion: v1
+  eventTime: "2026-11-22T11:42:13.823573Z"
+  firstTimestamp: null
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "507"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: null
+  message: Successfully assigned lab3-o4/enrolld-6889d7c88c-ssp86 to ecs-af06
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b4072db5811
+    namespace: lab3-o4
+    resourceVersion: "515"
+    uid: 11336105-db32-4e06-8525-4273e2d47196
+  reason: Scheduled
+  reportingComponent: default-scheduler
+  reportingInstance: default-scheduler-ecs-af06
+  source: {}
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:13Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "491"
+    uid: 0f1afe4f-583a-4244-a6b4-79f8472726b5
+  kind: Event
+  lastTimestamp: "2026-11-22T11:42:13Z"
+  message: Scaled up replica set enrolld-6889d7c88c from 0 to 2
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld.18ea5b406ab91c0b
+    namespace: lab3-o4
+    resourceVersion: "493"
+    uid: 2f3380be-2b4b-42b7-a0e3-f99e3c3dd136
+  reason: ScalingReplicaSet
+  reportingComponent: deployment-controller
+  reportingInstance: ""
+  source:
+    component: deployment-controller
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:13Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: ReplicaSet
+    name: enrolld-6889d7c88c
+    namespace: lab3-o4
+    resourceVersion: "492"
+    uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+  kind: Event
+  lastTimestamp: "2026-11-22T11:42:13Z"
+  message: 'Created pod: enrolld-6889d7c88c-ssp86'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld-6889d7c88c.18ea5b4071a0d28a
+    namespace: lab3-o4
+    resourceVersion: "509"
+    uid: bad07f43-7679-4159-8b6b-829cd7094736
+  reason: SuccessfulCreate
+  reportingComponent: replicaset-controller
+  reportingInstance: ""
+  source:
+    component: replicaset-controller
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:13Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: ReplicaSet
+    name: enrolld-6889d7c88c
+    namespace: lab3-o4
+    resourceVersion: "492"
+    uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+  kind: Event
+  lastTimestamp: "2026-11-22T11:42:13Z"
+  message: 'Created pod: enrolld-6889d7c88c-r7566'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld-6889d7c88c.18ea5b4071575448
+    namespace: lab3-o4
+    resourceVersion: "506"
+    uid: 4ed374d8-b651-49c7-aa7d-72fc0ef5bfd7
+  reason: SuccessfulCreate
+  reportingComponent: replicaset-controller
+  reportingInstance: ""
+  source:
+    component: replicaset-controller
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:44Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:42:44Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 128.242.245.125:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:44Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b478a59aaf8
+    namespace: lab3-o4
+    resourceVersion: "540"
+    uid: e0d4ae14-32d6-4f6d-b7e0-e2c97dcb29b8
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:44Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:42:44Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 128.242.245.125:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:44Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b478a186d13
+    namespace: lab3-o4
+    resourceVersion: "539"
+    uid: 90f59576-109b-4187-a341-ee75b1a03655
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:43:26Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:43:26Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 69.50.221.20:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:43:26Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b5145ee52fd
+    namespace: lab3-o4
+    resourceVersion: "565"
+    uid: fc79653b-3e42-44f1-b5f4-6922275ac0f1
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:43:28Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:43:28Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 69.50.221.20:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:43:28Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b51bd1595f2
+    namespace: lab3-o4
+    resourceVersion: "568"
+    uid: 3e030e25-d154-48f6-b617-98fd0126ace2
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 2
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:44:09Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:44:50Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 31.13.71.19:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:44:09Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b5b48c43331
+    namespace: lab3-o4
+    resourceVersion: "630"
+    uid: 502ae5aa-6a2c-4d75-bf94-5e064c9728d6
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 2
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:44:11Z"
+  involvedObject:
+    apiVersion: v1
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:44:56Z"
+  message: 'Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc
+    = failed to pull image "rancher/mirrored-pause:3.10.2": failed to pull and unpack
+    image "docker.io/rancher/mirrored-pause:3.10.2": failed to resolve reference "docker.io/rancher/mirrored-pause:3.10.2":
+    failed to do request: Head "https://registry-1.docker.io/v2/rancher/mirrored-pause/manifests/3.10.2":
+    dial tcp 31.13.71.19:443: i/o timeout'
+  metadata:
+    creationTimestamp: "2026-11-22T11:44:11Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b5bc03cc60a
+    namespace: lab3-o4
+    resourceVersion: "704"
+    uid: 6f00018c-b8da-4d55-9d79-83481606187a
+  reason: FailedCreatePodSandBox
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 12
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:13Z"
+  involvedObject:
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "501"
+    uid: 3dbe657d-2ebf-4da3-af23-17d720e7e65b
+  kind: Event
+  lastTimestamp: "2026-11-22T11:44:58Z"
+  message: 'invalid metrics (1 invalid out of 1), first error is: failed to get cpu
+    resource metric value: failed to get cpu utilization: unable to get metrics for
+    resource cpu: unable to fetch metrics from resource metrics API: the server is
+    currently unable to handle the request (get pods.metrics.k8s.io)'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld.18ea5b406e50fedc
+    namespace: lab3-o4
+    resourceVersion: "713"
+    uid: 84650225-b319-4e82-a13d-c7fee1da3d34
+  reason: FailedComputeMetricsReplicas
+  reportingComponent: horizontal-pod-autoscaler
+  reportingInstance: ""
+  source:
+    component: horizontal-pod-autoscaler
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:03Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:03Z"
+  message: Container image "localhost/enrolld:o4" already present on machine and can
+    be accessed by the pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:03Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b67de83e1e2
+    namespace: lab3-o4
+    resourceVersion: "715"
+    uid: 75caa411-c94b-454c-8e3f-f4a494993d34
+  reason: Pulled
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:03Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:03Z"
+  message: Container created
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:03Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b67dfe48549
+    namespace: lab3-o4
+    resourceVersion: "717"
+    uid: e7e20459-ee9c-466c-952b-1aa5212db275
+  reason: Created
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:03Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:03Z"
+  message: Container started
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:03Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b67e2b079e8
+    namespace: lab3-o4
+    resourceVersion: "718"
+    uid: 7870258b-6c79-4f5b-824d-9e8f7d9bc226
+  reason: Started
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:03Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:03Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.30:8081/readyz": dial tcp
+    10.42.0.30:8081: connect: connection refused'
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:03Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b67e2dc9401
+    namespace: lab3-o4
+    resourceVersion: "719"
+    uid: 600b883d-e3dc-452f-8185-ac35fd24fc8c
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:10Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:10Z"
+  message: Container image "localhost/enrolld:o4" already present on machine and can
+    be accessed by the pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:10Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b698054dc27
+    namespace: lab3-o4
+    resourceVersion: "733"
+    uid: b774fe94-69bd-4b6c-ad5e-902c0a26bfa8
+  reason: Pulled
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:10Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:10Z"
+  message: Container created
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:10Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b6981ebdd12
+    namespace: lab3-o4
+    resourceVersion: "735"
+    uid: e9fbf7f4-4d28-4705-8c71-272e52dbaf50
+  reason: Created
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:10Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:10Z"
+  message: Container started
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:10Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b6984959bbd
+    namespace: lab3-o4
+    resourceVersion: "736"
+    uid: 66f64ba6-7f65-4e34-9b9d-19da5e1a42dd
+  reason: Started
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:10Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:10Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.31:8081/readyz": dial tcp
+    10.42.0.31:8081: connect: connection refused'
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:10Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b6984bf7cc9
+    namespace: lab3-o4
+    resourceVersion: "737"
+    uid: 9cddefdf-3ab4-4db5-954d-6b3308f54b88
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 13
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:42:13Z"
+  involvedObject:
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "501"
+    uid: 3dbe657d-2ebf-4da3-af23-17d720e7e65b
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:13Z"
+  message: 'failed to get cpu utilization: unable to get metrics for resource cpu:
+    unable to fetch metrics from resource metrics API: the server is currently unable
+    to handle the request (get pods.metrics.k8s.io)'
+  metadata:
+    creationTimestamp: "2026-11-22T11:42:13Z"
+    name: enrolld.18ea5b406e108d66
+    namespace: lab3-o4
+    resourceVersion: "750"
+    uid: 9f4c9f87-e9aa-4004-bfec-ae33ae71d923
+  reason: FailedGetResourceMetric
+  reportingComponent: horizontal-pod-autoscaler
+  reportingInstance: ""
+  source:
+    component: horizontal-pod-autoscaler
+  type: Warning
+- apiVersion: v1
+  count: 20
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:03Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:22Z"
+  message: 'Readiness probe failed: HTTP probe failed with statuscode: 503'
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:03Z"
+    name: enrolld-6889d7c88c-r7566.18ea5b67e76a69ed
+    namespace: lab3-o4
+    resourceVersion: "772"
+    uid: edcc9076-9c38-4b9e-b079-fb0c1dc9d189
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 20
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:45:10Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:45:29Z"
+  message: 'Readiness probe failed: HTTP probe failed with statuscode: 503'
+  metadata:
+    creationTimestamp: "2026-11-22T11:45:10Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5b69891f3de2
+    namespace: lab3-o4
+    resourceVersion: "792"
+    uid: bc297b03-7630-42e4-b70f-00b2c5ef1082
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:53Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-r7566
+    namespace: lab3-o4
+    resourceVersion: "508"
+    uid: 0f9126cb-2beb-4d7f-bfc2-3333678c345d
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:53Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.30:8081/readyz": context deadline
+    exceeded (Client.Timeout exceeded while awaiting headers)'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:53Z"
+    name: enrolld-6889d7c88c-r7566.18ea5bab6f1a8b72
+    namespace: lab3-o4
+    resourceVersion: "936"
+    uid: d4b82ffc-386b-4445-bb5e-664244693ede
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:58Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "950"
+    uid: 0f1afe4f-583a-4244-a6b4-79f8472726b5
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:58Z"
+  message: Scaled up replica set enrolld-6889d7c88c from 2 to 3
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:58Z"
+    name: enrolld.18ea5bacc1245f15
+    namespace: lab3-o4
+    resourceVersion: "954"
+    uid: d50ee5d3-20dd-492d-823c-4074928fa1ae
+  reason: ScalingReplicaSet
+  reportingComponent: deployment-controller
+  reportingInstance: ""
+  source:
+    component: deployment-controller
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:58Z"
+  involvedObject:
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "930"
+    uid: 3dbe657d-2ebf-4da3-af23-17d720e7e65b
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:58Z"
+  message: 'New size: 3; reason: cpu resource utilization (percentage of request)
+    above target'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:58Z"
+    name: enrolld.18ea5bacc0b9b610
+    namespace: lab3-o4
+    resourceVersion: "952"
+    uid: 2e76699c-601d-4d2e-93e9-d888e13ba83f
+  reason: SuccessfulRescale
+  reportingComponent: horizontal-pod-autoscaler
+  reportingInstance: ""
+  source:
+    component: horizontal-pod-autoscaler
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "959"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:59Z"
+  message: Container image "localhost/enrolld:o4" already present on machine and can
+    be accessed by the pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bace6df8b30
+    namespace: lab3-o4
+    resourceVersion: "966"
+    uid: 2c5841c6-c109-4fe6-a30b-5f8ea06ffb97
+  reason: Pulled
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "959"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:59Z"
+  message: Container created
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bace84e0833
+    namespace: lab3-o4
+    resourceVersion: "968"
+    uid: 2d30b62d-22db-42db-bf7e-00c8a795cdfc
+  reason: Created
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "959"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:59Z"
+  message: Container started
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bacec1c9bae
+    namespace: lab3-o4
+    resourceVersion: "969"
+    uid: 34920083-6413-4af7-ad30-98356237a107
+  reason: Started
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "959"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:59Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.33:8081/readyz": dial tcp
+    10.42.0.33:8081: connect: connection refused'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bacec673bc7
+    namespace: lab3-o4
+    resourceVersion: "970"
+    uid: af76bbe1-98b8-4e8b-920e-ee98e80b8b23
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: ReplicaSet
+    name: enrolld-6889d7c88c
+    namespace: lab3-o4
+    resourceVersion: "953"
+    uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+  kind: Event
+  lastTimestamp: "2026-11-22T11:49:59Z"
+  message: 'Created pod: enrolld-6889d7c88c-v62ht'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c.18ea5bacc7bdac0f
+    namespace: lab3-o4
+    resourceVersion: "958"
+    uid: d873d31f-b6c8-4c6b-8a8a-81bfaff34c00
+  reason: SuccessfulCreate
+  reportingComponent: replicaset-controller
+  reportingInstance: ""
+  source:
+    component: replicaset-controller
+  type: Normal
+- apiVersion: v1
+  count: 24
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:59Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-v62ht
+    namespace: lab3-o4
+    resourceVersion: "959"
+    uid: ff98b22b-63cf-419e-a90a-889a49c9d872
+  kind: Event
+  lastTimestamp: "2026-11-22T11:50:22Z"
+  message: 'Readiness probe failed: HTTP probe failed with statuscode: 503'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:59Z"
+    name: enrolld-6889d7c88c-v62ht.18ea5bacefc97339
+    namespace: lab3-o4
+    resourceVersion: "1051"
+    uid: 8d394759-72a0-4f0a-b8d2-1f58eea1c5aa
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1208"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: Container started
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc5622aa875
+    namespace: lab3-o4
+    resourceVersion: "1218"
+    uid: e6e6ca50-5f69-4669-8997-1dda79dce2d4
+  reason: Started
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: ReplicaSet
+    name: enrolld-6889d7c88c
+    namespace: lab3-o4
+    resourceVersion: "1203"
+    uid: a5e54e41-b2f4-46a6-b348-10874286eba4
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: 'Created pod: enrolld-6889d7c88c-dkd44'
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c.18ea5bc53a8b6faa
+    namespace: lab3-o4
+    resourceVersion: "1209"
+    uid: 89dedc22-9ee2-410e-9b0d-bc826348eca0
+  reason: SuccessfulCreate
+  reportingComponent: replicaset-controller
+  reportingInstance: ""
+  source:
+    component: replicaset-controller
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1208"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: Container created
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc55f89bb02
+    namespace: lab3-o4
+    resourceVersion: "1217"
+    uid: b3fb991c-acb0-45ae-b0ee-6041bfbd9b4a
+  reason: Created
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1208"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.34:8081/readyz": dial tcp
+    10.42.0.34:8081: connect: connection refused'
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc5628f69fd
+    namespace: lab3-o4
+    resourceVersion: "1219"
+    uid: f342006a-1214-4a19-96e8-e723d5b01428
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1208"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: Container image "localhost/enrolld:o4" already present on machine and can
+    be accessed by the pod
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc55df2b6ca
+    namespace: lab3-o4
+    resourceVersion: "1215"
+    uid: a9b08890-26a8-48e0-af60-c5d7e22b6ce2
+  reason: Pulled
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "1194"
+    uid: 3dbe657d-2ebf-4da3-af23-17d720e7e65b
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: 'New size: 4; reason: cpu resource utilization (percentage of request)
+    above target'
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld.18ea5bc539c48496
+    namespace: lab3-o4
+    resourceVersion: "1201"
+    uid: 925e4aa2-4a5a-44cf-ba24-1cd286d64aa6
+  reason: SuccessfulRescale
+  reportingComponent: horizontal-pod-autoscaler
+  reportingInstance: ""
+  source:
+    component: horizontal-pod-autoscaler
+  type: Normal
+- apiVersion: v1
+  count: 1
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: enrolld
+    namespace: lab3-o4
+    resourceVersion: "1200"
+    uid: 0f1afe4f-583a-4244-a6b4-79f8472726b5
+  kind: Event
+  lastTimestamp: "2026-11-22T11:51:44Z"
+  message: Scaled up replica set enrolld-6889d7c88c from 3 to 4
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld.18ea5bc53a17b9a4
+    namespace: lab3-o4
+    resourceVersion: "1205"
+    uid: 55b5c00a-c3be-48db-becc-2d306f30c10c
+  reason: ScalingReplicaSet
+  reportingComponent: deployment-controller
+  reportingInstance: ""
+  source:
+    component: deployment-controller
+  type: Normal
+- apiVersion: v1
+  count: 24
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:51:44Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-dkd44
+    namespace: lab3-o4
+    resourceVersion: "1208"
+    uid: c438da25-164b-4e2a-91de-ed90c46defa7
+  kind: Event
+  lastTimestamp: "2026-11-22T11:52:07Z"
+  message: 'Readiness probe failed: HTTP probe failed with statuscode: 503'
+  metadata:
+    creationTimestamp: "2026-11-22T11:51:44Z"
+    name: enrolld-6889d7c88c-dkd44.18ea5bc56d68b246
+    namespace: lab3-o4
+    resourceVersion: "1256"
+    uid: 634154a5-e748-40d2-a182-b86c1e00e047
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+- apiVersion: v1
+  count: 60
+  eventTime: null
+  firstTimestamp: "2026-11-22T11:49:50Z"
+  involvedObject:
+    apiVersion: v1
+    fieldPath: spec.containers{enrolld}
+    kind: Pod
+    name: enrolld-6889d7c88c-ssp86
+    namespace: lab3-o4
+    resourceVersion: "511"
+    uid: 67f1bad1-547e-4c3b-940e-1a8e064d2b52
+  kind: Event
+  lastTimestamp: "2026-11-22T11:52:55Z"
+  message: 'Readiness probe failed: Get "http://10.42.0.31:8081/readyz": context deadline
+    exceeded (Client.Timeout exceeded while awaiting headers)'
+  metadata:
+    creationTimestamp: "2026-11-22T11:49:50Z"
+    name: enrolld-6889d7c88c-ssp86.18ea5baabce22bc8
+    namespace: lab3-o4
+    resourceVersion: "1285"
+    uid: 846b859c-637e-466a-96d6-2a60c1d177d9
+  reason: Unhealthy
+  reportingComponent: kubelet
+  reportingInstance: ecs-af06
+  source:
+    component: kubelet
+    host: ecs-af06
+  type: Warning
+kind: List
+metadata:
+  resourceVersion: ""

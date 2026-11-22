@@ -1,0 +1,5 @@
+K3s install: INSTALL_K3S_EXEC=server --disable traefik --disable servicelb
+K3s binary and airgap archive from v1.37.2+k3s1 official release; sha256sum-amd64.txt checked
+265b3ee6a3198ef14033c63ef46cbb32370d83795199fb6d1b01f21575eddbda  /usr/local/bin/k3s
+35a5af1e69b57b8b627a4f6b1c29ea104209b661067b8c97fd40dc3f860bfcd2  /tmp/o4-k3s-airgap.tar.zst
+f9fb9071931c9250ee9735fd71a54136ba6d3ee10ab7437e182c86ddc8b72543  /tmp/o4-enrolld.tar

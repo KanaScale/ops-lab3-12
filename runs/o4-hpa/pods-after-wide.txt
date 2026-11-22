@@ -1,0 +1,5 @@
+NAME                       READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+enrolld-6889d7c88c-dkd44   1/1     Running   0          7m34s   10.42.0.34   ecs-af06   <none>           <none>
+enrolld-6889d7c88c-r7566   1/1     Running   0          17m     10.42.0.30   ecs-af06   <none>           <none>
+enrolld-6889d7c88c-ssp86   1/1     Running   0          17m     10.42.0.31   ecs-af06   <none>           <none>
+enrolld-6889d7c88c-v62ht   1/1     Running   0          9m19s   10.42.0.33   ecs-af06   <none>           <none>

@@ -608,7 +608,7 @@ CPU 信号和 QPS 信号的差别主要体现在以下三个方面：
 | O1 GOMEMLIMIT | 已完成。原 200M 对照见 `runs/o1-control/`、`runs/o1-memlimit/`；512M 同负载成本补测见 `runs/o1-512-control/`、`runs/o1-512-memlimit/`。预测、配置、OOM 日志和 GC 数据见下文。 |
 | O2 两层伸缩 | 已完成。`runs/o2-direct/` 与 `runs/o2-nodewait/` 的同曲线对照、预测和结论见下文。 |
 | O3 扩错层 | 已完成。初轮 OOM 与 512M 中止记录、有界写入三轮对照及结论见下文，原始数据在 `runs/o3-*`。 |
-| O4 Kubernetes 的 HPA | <未做 / 环境、配置文件、数据与结论> |
+| O4 Kubernetes 的 HPA | 已完成。单节点 K3s 的 Deployment、Service、HPA 清单见 `deploy/o4-k3s.yaml`；测前预测见 `runs/o4-prediction.md`，完整原始数据与结论见 `runs/o4-hpa/` 及下文。 |
 | O5 换负载均衡器 | <未做 / 配置文件、`runs/` 目录、结论> |
 | O6 两台主机 | <未做 / 拓扑、`runs/` 目录、结论> |
 | O7 迁移到小组项目 | <未做 / 仓库链接、做了什么、结论> |
@@ -723,6 +723,34 @@ CPU 信号和 QPS 信号的差别主要体现在以下三个方面：
 - **磁盘与 CPU 证据**：峰值阶段三轮进程合计仅用 0.124～0.146 核（`o3-metrics.csv`），低于实例配额之和，CPU 不是本次吞吐的首要限制。固定 2 台的磁盘忙碌率估计约 0.955，固定 4 台约 0.854；`disk_util` 是虚拟块设备非空闲时间的速率，不能直接当作云盘容量百分比。更直接的观察是，同一盘上的应用 fsync 速率随写者增加从约 718 提高到约 1197 次/秒，因此在 1200 请求/秒这组负载下未观察到“加实例仍无法提高写 TPS”的共享盘上限。`node_disk_flush_requests_total` 还会受内核合并与其他写入影响，不应逐项当作应用请求数。
 
 **结论与边界**：O3 在这台主机、这块盘和此负载下，增加实例确实提高了写 TPS；原先“共享盘可能成为扩错层”的预测没有在 1200 请求/秒处得到证实。原因是各实例有独立的 `enroll.log` 和进程内互斥锁，增加实例扩大并发写入数，单块云盘仍可处理更多 fsync。继续加压时共享盘最终可能成为瓶颈，但本实验没有测出该上限。三组各只运行一次，且以 `-enroll-max 128` 把无限排队改为 503；客户端 p99 只统计成功请求，须与拒绝数一起看。初轮 128M 与中止的 512M 组证明无界队列会触发 OOM，不能把这些轮次的低成功数误判为磁盘饱和。
+
+### O4 Kubernetes：K3s HPA 与 B2 CPU 对照
+
+#### 环境、方案与测前预测
+
+2026-11-22 在 B2 所用的同一台 2 vCPU、3531 MiB 云服务器上安装 K3s `v1.37.2+k3s1`，保留 metrics-server，关闭实验不需要的 Traefik 与 ServiceLB。服务器无法访问 Docker Hub，因此从该版本官方发布页下载离线镜像包，并按官方 SHA256 清单校验后导入 containerd；`enrolld` 用仓库中的 `scripts/o4-build-image.py` 打成 OCI 镜像并本机导入。版本、安装参数和校验值见 `runs/o4-hpa/meta.txt`、`image-checksums.txt`；业务清单为 `deploy/o4-k3s.yaml`。K3s 运行时镜像导入方式见 [K3s 文档](https://docs.k3s.io/add-ons/import-images)。
+
+Deployment 起步 2 Pod、最多 4 Pod，每个 Pod 申请并限制 `250m` CPU、128 MiB 内存，`enrolld` 用 `-warmup 60s -work 1000000`；readiness 探针每秒检查 `/readyz`。`autoscaling/v2` HPA 以平均 CPU 利用率 70% 为目标，不设置自定义 `behavior`，沿用控制器默认同步、未就绪/初始化 Pod 指标处理和 300 秒缩容稳定窗口（[Kubernetes HPA 文档](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/)）。通过 NodePort `30080` 从本机运行与 B2 完全相同的 `scripts/plan.sh 33 330` 630 秒 Poisson 曲线，`loadgen` 同样绑核 0、2 秒超时、200 ms SLO、随机种子 1。测前预测已单独于压测前提交为 `runs/o4-prediction.md`：预计首次扩容第 145～180 秒、新 Pod 第 210～270 秒 Ready、缺口 70～130 秒。
+
+复现负载与采样：在官方 K3s 及离线镜像可用后，执行 `python3 scripts/o4-build-image.py bin/enrolld /tmp/o4-enrolld.tar`、`k3s ctr -n k8s.io images import /tmp/o4-enrolld.tar`、`k3s kubectl apply -f deploy/o4-k3s.yaml`，等两个 Pod Ready 且 HPA 有 CPU 指标，再运行 `bash scripts/o4.sh o4-hpa`；最后运行 `python3 scripts/o4-summarize.py runs/o4-hpa`。`runs/o4-hpa/` 保存完整 `steps.csv`、630 行 `timeline.csv`、297 条约两秒一采的 `samples.jsonl`、HPA 描述、对象快照、事件及四个 Pod 的应用指标；采样错误为 0，Pod 重启数均为 0。原始数据先由服务器提交并推送，再拉到本地。
+
+#### 实测与对照
+
+| 指标 | B2 `scaler` CPU | O4 K3s HPA |
+|---|---:|---:|
+| 首次扩容 / s | 146.1 | 153.7 |
+| 第二次扩容 / s | 161.1 | 259.4 |
+| 两个新实例/Pod Ready / s | 230.1、245.1 | 214.4、319.4 |
+| 缺口 / s | 100 | 351 |
+| 错误请求 / 123254 | 16945 | 13628 |
+| 慢成功请求 | 10275 | 22855 |
+| 实例或 Pod·分钟 | 36.9 | 35.1 |
+
+缺口沿用任务 B 的口径：该秒有错误，或成功请求 p99 超过 200 ms。O4 第 141～491 秒连续 350 秒，另在第 493 秒 1 秒；峰值阶段成功吞吐为 286.0 请求/秒、p99 为 1659.52 ms（`summary.md`、`steps.csv`、`timeline.csv`）。首次新增 Pod 比 B2 早约 15.7 秒 Ready，错误请求比 B2 少 3317 个；但第二次扩容比 B2 晚 98.3 秒，直到第 319.4 秒第四个 Pod 才 Ready。HPA 在第 151～229 秒间多次看到原有 Pod 的 Ready 数在 0～2 之间波动；新增 Pod 尚未就绪及其 CPU 样本处于初始化阶段时，[HPA 默认算法](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/)会保守处理这些指标。采样只能证明两次决策相隔约 106 秒，不能把全部延迟唯一归因于某一个默认参数。B2 的 `scaler` 则每 15 秒最多创建 1 台，第二次创建发生在第一次后 15 秒；它没有 HPA 对未就绪 Pod 的 CPU 初始化处理。
+
+四个 Pod 全 Ready 后，第 319～450 秒仅有 4 个错误，但 131 秒的 p99 全部超过 200 ms。压测后四个 Pod `/api/courses/{id}` 的 200 累计计数依次为 37107、50609、28488、805（`pod-metrics-*.txt`）；第四个 Pod 仅处理约 0.7% 的服务端成功请求。Kubernetes Service 在建立 TCP 连接时选择端点，客户端复用 HTTP 连接；这种连接级分流与 `lbd` 按请求轮转不同，**很可能**使新增 Pod 难以分担已有长连接上的峰值流量。原始数据证明了明显不均衡与长尾延迟，但没有单独隔离 NodePort 开销、CPU 节流或连接分流各自的影响，不能把 351 秒缺口全归于 HPA 控制器（[Kubernetes Service 代理说明](https://kubernetes.io/docs/reference/networking/virtual-ips/)）。
+
+回落后第 527 秒 HPA 的 CPU 指标已降至约 23%，第 584 秒约 8%，曲线结束时仍是 4 Pod；负载结束后继续观察到第 768.4 秒从 4 缩到 3、第 798.4 秒从 3 缩到 2（`postrun-events.yaml`、`postrun-state.txt`）。这符合默认 300 秒缩容稳定窗口的行为。O4 的 35.1 Pod·分钟少于 B2 的 36.9 实例·分钟，但两套入口与运行时不同：B2 经 `lbd`、模拟 20 秒拉镜像且实例绑核 1；O4 经 NodePort、镜像预导入、Pod 未绑核并与 K3s 控制面共享主机。两轮各只运行一次且日期不同，因此表格是实现与观测行为的对照，不是仅改变 HPA 控制器的严格因果实验。测前预测中的首次扩容和首个 Pod Ready 大体吻合，缺口 70～130 秒被实测 351 秒否定；原因主要在预测没有计入第二次扩容迟滞及四副本时的严重流量不均衡。
 
 ## 8. 成员分工
 
